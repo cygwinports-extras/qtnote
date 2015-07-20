@@ -1,0 +1,21 @@
+inherit qt5-qmake
+
+NAME="qtnote"
+VERSION=3.0.0
+RELEASE=1
+CATEGORY="Utils"
+SUMMARY="Qt note taking application"
+DESCRIPTION="QtNote is a very small Qt app which usually lives in your system
+tray and allows you to make notes quick way.  It was written as a clone of
+Tomboy with use of Qt. It is not so feature rich as Tomboy but light and fast
+and usually suits all common needs."
+HOMEPAGE="http://ri0n.github.io/QtNote"
+SRC_URI="https://github.com/Ri0n/QtNote/archive/${VERSION}/QtNote-${VERSION}.tar.gz"
+SRC_DIR="QtNote-${VERSION}"
+PATCH_URI="3.0.0-cygwin-build.patch"
+
+PKG_NAMES="${NAME} ${NAME}-devel"
+qtnote_CONTENTS="etc/ usr/bin/ usr/lib/qtnote/ usr/share/"
+qtnote_devel_SUMMARY="${SUMMARY} (plugin development)"
+qtnote_devel_REQUIRES="libQt5Core-devel libQt5Gui-devel"
+qtnote_devel_CONTENTS="usr/include/qtnote/ usr/lib/libqtnote.dll.a"

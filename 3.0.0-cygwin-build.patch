@@ -1,0 +1,40 @@
+--- origsrc/QtNote-3.0.0/libqtnote/libqtnote.pro	2015-07-20 02:12:25.000000000 -0500
++++ src/QtNote-3.0.0/libqtnote/libqtnote.pro	2015-07-20 12:45:02.850334600 -0500
+@@ -120,7 +120,7 @@ macx {
+ }
+ 
+ win32-ms*:LIBS *= -lUser32
+-win32:DEFINES += QTNOTE_EXPORT
++win32|cygwin-*:DEFINES += QTNOTE_EXPORT
+ 
+ RESOURCES += main.qrc
+ 
+--- origsrc/QtNote-3.0.0/plugins/baseintegration/3rdparty/qxt/qxt.pri	2015-07-20 02:12:25.000000000 -0500
++++ src/QtNote-3.0.0/plugins/baseintegration/3rdparty/qxt/qxt.pri	2015-07-20 12:49:10.792319300 -0500
+@@ -4,6 +4,7 @@ SOURCES += \
+ mac:SOURCES += $$PWD/qxtglobalshortcut_mac.cpp
+ win32:SOURCES += $$PWD/qxtglobalshortcut_win.cpp
+ unix:!macx:SOURCES += $$PWD/qxtglobalshortcut_x11.cpp
++unix:!macx:LIBS += -lX11
+ 
+ HEADERS += \
+ 	$$PWD/qxtglobal.h \
+--- origsrc/QtNote-3.0.0/plugins/plugin.pri	2015-07-20 02:12:25.000000000 -0500
++++ src/QtNote-3.0.0/plugins/plugin.pri	2015-07-20 12:45:18.773356600 -0500
+@@ -12,6 +12,8 @@ win32 {
+ }
+ 
+ unix {
++	DEFINES += QTNOTE_IMPORT
++	LIBS += -L$$OUT_PWD/../../libqtnote -lqtnote
+ 	target.path = $$LIBDIR/$$APPNAME
+ 	INSTALLS += target
+ }
+--- origsrc/QtNote-3.0.0/plugins/ubuntu/ubuntu.pro	2015-07-20 02:12:25.000000000 -0500
++++ src/QtNote-3.0.0/plugins/ubuntu/ubuntu.pro	2015-07-20 12:50:27.228025400 -0500
+@@ -17,3 +17,5 @@ HEADERS += \
+ 
+ RESOURCES += \
+     ubuntu.qrc
++
++unix:!mac:LIBS += -lX11
